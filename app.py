@@ -199,7 +199,7 @@ def main():
     
     # Quiz section
     st.sidebar.markdown("---")
-    if st.sidebar.button("🎯 Quick Quiz"):
+    if st.sidebar.checkbox("🎯 Quick Quiz"):
         display_quiz()
 
 def display_root_lesson(root):
