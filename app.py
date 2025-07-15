@@ -3,194 +3,232 @@ import random
 
 # Configure the page
 st.set_page_config(
-    page_title="Hebrew Roots Master",
-    page_icon="📚",
+    page_title="Hebrew Roots Adventure! 🌟",
+    page_icon="🔤",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Hebrew roots database
+# Custom CSS for kid-friendly design
+st.markdown("""
+<style>
+    .main-header {
+        font-size: 2.5rem;
+        color: #4CAF50;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .tutor-quote {
+        background: linear-gradient(135deg, #FFE082 0%, #FFF176 100%);
+        border-radius: 15px;
+        padding: 15px;
+        border-left: 5px solid #FF9800;
+        font-size: 1.1rem;
+    }
+    .hebrew-text {
+        font-size: 2rem;
+        color: #2196F3;
+        font-weight: bold;
+        text-align: center;
+        background: #E3F2FD;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px 0;
+    }
+    .success-box {
+        background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    .quiz-button {
+        background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Hebrew roots database - kid-friendly version
 ROOTS_DATA = {
     "כ-ת-ב": {
-        "meaning": "write",
+        "meaning": "write ✏️",
         "pronunciation": "k-t-v",
+        "emoji": "✍️",
+        "color": "#2196F3",
         "words": [
-            {"hebrew": "כתב", "pronunciation": "katav", "meaning": "he wrote", "type": "verb (past)"},
-            {"hebrew": "כותב", "pronunciation": "kotev", "meaning": "writing/writer", "type": "verb (present)/noun"},
-            {"hebrew": "כתיבה", "pronunciation": "ktiva", "meaning": "writing", "type": "noun (feminine)"},
-            {"hebrew": "מכתב", "pronunciation": "mikhtav", "meaning": "letter", "type": "noun (masculine)"},
-            {"hebrew": "כתובת", "pronunciation": "ktovet", "meaning": "address", "type": "noun (feminine)"},
-            {"hebrew": "כתוב", "pronunciation": "katuv", "meaning": "written", "type": "adjective"},
-            {"hebrew": "ביכתב", "pronunciation": "bikhtav", "meaning": "in writing", "type": "adverb"}
+            {"hebrew": "כתב", "pronunciation": "katav", "meaning": "he wrote", "type": "verb", "emoji": "✏️"},
+            {"hebrew": "כותב", "pronunciation": "kotev", "meaning": "writer", "type": "noun", "emoji": "👨‍💻"},
+            {"hebrew": "מכתב", "pronunciation": "mikhtav", "meaning": "letter", "type": "noun", "emoji": "💌"},
+            {"hebrew": "כתיבה", "pronunciation": "ktiva", "meaning": "writing", "type": "noun", "emoji": "📝"},
         ],
         "conversations": [
             {
-                "context": "At the post office",
-                "hebrew": "אני צריך לכתוב את הכתובת על המכתב",
-                "pronunciation": "ani tzarich likhtov et haktovet al hamikhtav",
-                "english": "I need to write the address on the letter"
+                "context": "📮 At the post office",
+                "hebrew": "אני כותב מכתב לסבתא",
+                "pronunciation": "ani kotev mikhtav l'savta",
+                "english": "I'm writing a letter to grandma",
+                "emoji": "👵💌"
             },
             {
-                "context": "At work",
-                "hebrew": "האם זה כתוב בכתב יד או מודפס?",
-                "pronunciation": "ha'im ze katuv bekhtav yad o mudpas?",
-                "english": "Is this written by hand or printed?"
-            },
-            {
-                "context": "In class",
-                "hebrew": "התלמידים כותבים בחוברות שלהם",
-                "pronunciation": "hatalmidim kotvim bachuvrot shelahem",
-                "english": "The students are writing in their notebooks"
+                "context": "🏫 At school",
+                "hebrew": "התלמידים כותבים בחוברות",
+                "pronunciation": "hatalmidim kotvim bachuvrot",
+                "english": "The students are writing in notebooks",
+                "emoji": "📚✏️"
             }
         ],
-        "tutor_intro": "Ah, כ-ת-ב! The root of all your writing anxieties! You think English spelling is hard? Try Hebrew, where three letters become your entire literary universe.",
-        "etymology": "From ancient Semitic roots meaning 'to cut' or 'carve' - because originally writing meant carving into stone. Much like how learning Hebrew carves confusion into your brain!",
-        "torah_connection": "This root appears over 200 times in Torah. Every time Moses had to write something down, there it is - כתב. Even God couldn't escape paperwork!"
+        "tutor_intro": "Ah, כ-ת-ב! This is like the superhero of writing! ✨ From three little letters, we get ALL the words about writing. It's like Hebrew magic! 🎩✨",
+        "kid_fact": "🌟 Fun fact: Ancient people carved letters into stone - imagine doing your homework on a rock! 🪨",
+        "torah_connection": "📜 Moses wrote the Ten Commandments using this root! Even God needed good handwriting! ✍️"
     },
     
     "א-כ-ל": {
-        "meaning": "eat",
+        "meaning": "eat 🍎",
         "pronunciation": "a-kh-l",
+        "emoji": "🍽️",
+        "color": "#4CAF50",
         "words": [
-            {"hebrew": "אכל", "pronunciation": "akhal", "meaning": "he ate", "type": "verb (past)"},
-            {"hebrew": "אוכל", "pronunciation": "okhel", "meaning": "eating/food", "type": "verb (present)/noun"},
-            {"hebrew": "אכילה", "pronunciation": "akhila", "meaning": "eating", "type": "noun (feminine)"},
-            {"hebrew": "מאכל", "pronunciation": "maakhal", "meaning": "food", "type": "noun (masculine)"},
-            {"hebrew": "אכיל", "pronunciation": "akhil", "meaning": "edible", "type": "adjective"},
-            {"hebrew": "תאכל", "pronunciation": "tokhal", "meaning": "you will eat", "type": "verb (future)"}
+            {"hebrew": "אכל", "pronunciation": "akhal", "meaning": "he ate", "type": "verb", "emoji": "😋"},
+            {"hebrew": "אוכל", "pronunciation": "okhel", "meaning": "food", "type": "noun", "emoji": "🍕"},
+            {"hebrew": "אכילה", "pronunciation": "akhila", "meaning": "eating", "type": "noun", "emoji": "🍽️"},
+            {"hebrew": "תאכל", "pronunciation": "tokhal", "meaning": "you will eat", "type": "verb", "emoji": "🥄"},
         ],
         "conversations": [
             {
-                "context": "At a restaurant",
-                "hebrew": "מה אתה אוכל? האוכל כאן טעים מאוד",
-                "pronunciation": "ma ata okhel? ha'okhel kan ta'im me'od",
-                "english": "What are you eating? The food here is very tasty"
+                "context": "🍕 At dinner",
+                "hebrew": "מה אתה אוכל?",
+                "pronunciation": "ma ata okhel?",
+                "english": "What are you eating?",
+                "emoji": "🤔🍽️"
             },
             {
-                "context": "Family dinner",
-                "hebrew": "אכלתי יותר מדי, אבל המאכל היה נפלא",
-                "pronunciation": "akhalti yoter miday, aval hamaakhal haya nifla",
-                "english": "I ate too much, but the food was wonderful"
-            },
-            {
-                "context": "Grocery shopping",
-                "hebrew": "האם זה אכיל? מתי פג התוקף?",
-                "pronunciation": "ha'im ze akhil? matay pag hatokef?",
-                "english": "Is this edible? When does it expire?"
+                "context": "🏠 At home",
+                "hebrew": "האוכל טעים מאוד!",
+                "pronunciation": "ha'okhel ta'im me'od!",
+                "english": "The food is very delicious!",
+                "emoji": "😋👌"
             }
         ],
-        "tutor_intro": "Food! Finally, a root we can all relate to. א-כ-ל has fed the Jewish people linguistically for millennia. Unlike my cooking, this root actually nourishes.",
-        "etymology": "From proto-Semitic meaning 'to consume.' Fun fact: it's related to the word for 'destruction' because apparently our ancestors understood that eating and destroying are basically the same thing.",
-        "torah_connection": "First appears in Genesis when God tells Adam what he can and cannot eat. Spoiler alert: it doesn't go well."
+        "tutor_intro": "א-כ-ל is everyone's favorite root! 🍕 It's all about eating - and trust me, I know a LOT about eating! 😅",
+        "kid_fact": "🌟 This root appears in the first story of the Torah when Adam and Eve ate the forbidden fruit! 🍎",
+        "torah_connection": "📜 The first big eating mistake in history! But hey, we all make food choices we regret! 🤷‍♂️"
     },
     
     "ל-מ-ד": {
-        "meaning": "learn/teach",
+        "meaning": "learn 📚",
         "pronunciation": "l-m-d",
+        "emoji": "🎓",
+        "color": "#9C27B0",
         "words": [
-            {"hebrew": "למד", "pronunciation": "lamad", "meaning": "he learned", "type": "verb (past)"},
-            {"hebrew": "לומד", "pronunciation": "lomed", "meaning": "learning/student", "type": "verb (present)/noun"},
-            {"hebrew": "למידה", "pronunciation": "lmida", "meaning": "learning", "type": "noun (feminine)"},
-            {"hebrew": "תלמיד", "pronunciation": "talmid", "meaning": "student", "type": "noun (masculine)"},
-            {"hebrew": "מלמד", "pronunciation": "melamed", "meaning": "teacher", "type": "noun (masculine)"},
-            {"hebrew": "תלמוד", "pronunciation": "talmud", "meaning": "study/Talmud", "type": "noun (masculine)"}
+            {"hebrew": "למד", "pronunciation": "lamad", "meaning": "he learned", "type": "verb", "emoji": "🧠"},
+            {"hebrew": "תלמיד", "pronunciation": "talmid", "meaning": "student", "type": "noun", "emoji": "👨‍🎓"},
+            {"hebrew": "מלמד", "pronunciation": "melamed", "meaning": "teacher", "type": "noun", "emoji": "👩‍🏫"},
+            {"hebrew": "תלמוד", "pronunciation": "talmud", "meaning": "Talmud", "type": "noun", "emoji": "📖"},
         ],
         "conversations": [
             {
-                "context": "At school",
-                "hebrew": "התלמיד הזה לומד מהר מאוד",
-                "pronunciation": "hatalmid haze lomed maher me'od",
-                "english": "This student learns very quickly"
+                "context": "🏫 At school",
+                "hebrew": "התלמיד לומד עברית",
+                "pronunciation": "hatalmid lomed ivrit",
+                "english": "The student is learning Hebrew",
+                "emoji": "👨‍🎓🔤"
             },
             {
-                "context": "Study session",
-                "hebrew": "למדתי תלמוד עם המלמד שלי",
-                "pronunciation": "lamadti talmud im hamelamed sheli",
-                "english": "I studied Talmud with my teacher"
-            },
-            {
-                "context": "University",
-                "hebrew": "התהליך של למידה לוקח זמן",
-                "pronunciation": "hatahalich shel lmida lokech zman",
-                "english": "The process of learning takes time"
+                "context": "📚 Study time",
+                "hebrew": "למדתי הרבה היום",
+                "pronunciation": "lamadti harbe hayom",
+                "english": "I learned a lot today",
+                "emoji": "🧠💡"
             }
         ],
-        "tutor_intro": "Ah, ל-מ-ד - the root that's been making Jews anxious about education for 3,000 years! From this humble root comes 'Talmud' - proof that we've been overcomplicating simple concepts since ancient times.",
-        "etymology": "Originally meant 'to goad' or 'drive cattle.' Apparently our ancestors understood that learning requires the same approach as herding livestock. Very insightful.",
-        "torah_connection": "Moses uses this root constantly when telling the Israelites to learn God's laws. Spoiler: they don't listen very well."
+        "tutor_intro": "ל-מ-ד is the learning root! 🎓 I've been using this root to confuse myself for 30 years! But hey, at least I'm consistent! 😅",
+        "kid_fact": "🌟 From this root comes 'Talmud' - the biggest homework assignment in Jewish history! 📚",
+        "torah_connection": "📜 Moses was always telling people to learn things. Good thing there were no pop quizzes! 📝"
     },
     
     "ש-מ-ע": {
-        "meaning": "hear/listen",
+        "meaning": "hear 👂",
         "pronunciation": "sh-m-a",
+        "emoji": "👂",
+        "color": "#FF5722",
         "words": [
-            {"hebrew": "שמע", "pronunciation": "shama", "meaning": "he heard", "type": "verb (past)"},
-            {"hebrew": "שומע", "pronunciation": "shomea", "meaning": "hearing/listener", "type": "verb (present)/noun"},
-            {"hebrew": "שמיעה", "pronunciation": "shmiya", "meaning": "hearing", "type": "noun (feminine)"},
-            {"hebrew": "שמועה", "pronunciation": "shmuah", "meaning": "rumor", "type": "noun (feminine)"},
-            {"hebrew": "משמע", "pronunciation": "mashma", "meaning": "meaning/implication", "type": "noun (masculine)"},
-            {"hebrew": "שמע ישראל", "pronunciation": "shma yisrael", "meaning": "Hear O Israel", "type": "prayer"}
+            {"hebrew": "שמע", "pronunciation": "shama", "meaning": "he heard", "type": "verb", "emoji": "👂"},
+            {"hebrew": "שומע", "pronunciation": "shomea", "meaning": "listening", "type": "verb", "emoji": "🎧"},
+            {"hebrew": "שמועה", "pronunciation": "shmuah", "meaning": "rumor", "type": "noun", "emoji": "🗣️"},
+            {"hebrew": "שמע ישראל", "pronunciation": "shma yisrael", "meaning": "Hear O Israel", "type": "prayer", "emoji": "🙏"},
         ],
         "conversations": [
             {
-                "context": "On the phone",
-                "hebrew": "אני לא שומע אותך טוב, יש הפרעות",
-                "pronunciation": "ani lo shomea otkha tov, yesh hafra'ot",
-                "english": "I can't hear you well, there's interference"
+                "context": "📞 On the phone",
+                "hebrew": "אני לא שומע אותך טוב",
+                "pronunciation": "ani lo shomea otkha tov",
+                "english": "I can't hear you well",
+                "emoji": "📞❓"
             },
             {
-                "context": "Gossip",
-                "hebrew": "שמעת את השמועה על דוד?",
-                "pronunciation": "shamata et hashmuah al David?",
-                "english": "Did you hear the rumor about David?"
-            },
-            {
-                "context": "In synagogue",
-                "hebrew": "שמע ישראל ה' אלקינו ה' אחד",
-                "pronunciation": "shma yisrael adonai eloheinu adonai echad",
-                "english": "Hear O Israel, the Lord our God, the Lord is one"
+                "context": "🕍 At synagogue",
+                "hebrew": "שמע ישראל!",
+                "pronunciation": "shma yisrael!",
+                "english": "Hear O Israel!",
+                "emoji": "🙏✨"
             }
         ],
-        "tutor_intro": "ש-מ-ע - the most famous Hebrew root you never realized you knew! It's in the Shema prayer, which every Jewish kid learns. Finally, something that connects Sunday school to actual Hebrew!",
-        "etymology": "From ancient Semitic meaning 'to hear' or 'perceive.' Same root family as 'shem' (name) because apparently hearing and naming are connected. Hebrew is very philosophical that way.",
-        "torah_connection": "The Shema (שמע ישראל) uses this root. It's basically the most important sentence in Judaism, so... no pressure learning this one correctly."
+        "tutor_intro": "ש-מ-ע is the most famous Hebrew root! 🌟 It's in the Shema prayer that every Jewish kid learns. Finally, something you already know! 🎉",
+        "kid_fact": "🌟 This is the first word of the most important Jewish prayer! You might already know it! 🙏",
+        "torah_connection": "📜 'Shma Yisrael' - the most important sentence in Judaism! No pressure... 😅"
     }
 }
 
-# Tutor personality responses
-ENCOURAGEMENT = [
-    "Look at you, making progress! I'm kvelling over here!",
-    "Not bad! You're getting the hang of this Hebrew thing.",
-    "Excellent! You're smarter than I was at your stage.",
-    "Wonderful! Keep this up and you'll be correcting my pronunciation soon.",
-    "Fantastic! You're really getting these patterns down."
+# Fun encouragement messages for kids
+KID_ENCOURAGEMENT = [
+    "🌟 WOW! You're a Hebrew superstar! ⭐",
+    "🎉 Amazing! You're getting so good at this! 🎈",
+    "👏 Fantastic! Even I'm impressed! 🤩",
+    "🚀 You're flying through these roots! ✈️",
+    "🏆 Incredible! You're a Hebrew champion! 🥇",
+    "✨ Brilliant! You're making this look easy! 💫",
+    "🎯 Perfect! You hit the bullseye! 🎯",
+    "🌈 Wonderful! You're brightening my day! ☀️"
 ]
 
 GENTLE_CORRECTIONS = [
-    "Eh, close enough! Let me clarify this for you...",
-    "Well, you tried! Here's what's actually happening...",
-    "Oy, not quite, but I like your thinking! Actually...",
-    "Nice attempt! Let me steer you in the right direction...",
-    "Good guess! Here's the real story though..."
+    "🤗 Oops! Let me help you with that... 💡",
+    "😊 Almost there! Here's the right answer... 🎯",
+    "🌟 Good try! Let me show you the way... 🗺️",
+    "💙 Don't worry, everyone learns! Here's the answer... 📚",
+    "🎈 Close one! The correct answer is... ✨",
+    "🌸 Nice effort! Here's what it really means... 🌺"
 ]
 
 def main():
-    st.title("🔤 Hebrew Roots Master")
-    st.markdown("*Learn Hebrew the way it was meant to be learned - through roots, patterns, and a healthy dose of neurosis*")
+    # Fun header
+    st.markdown('<h1 class="main-header">🌟 Hebrew Roots Adventure! 🔤</h1>', unsafe_allow_html=True)
+    st.markdown("### *Learn Hebrew with your favorite neurotic tutor!* 😄")
     
-    # Sidebar for navigation
-    st.sidebar.title("🤓 Your Neurotic Hebrew Tutor")
-    st.sidebar.markdown("*\"I've been studying Hebrew for 30 years and I'm still confused. Let's be confused together!\"*")
+    # Sidebar
+    st.sidebar.title("🤓 Your Hebrew Tutor")
+    st.sidebar.markdown("*\"I've been confused about Hebrew for 30 years - let's be confused together!\"* 😅")
     
-    # Root selection
+    # Root selection with emojis
+    st.sidebar.markdown("### 🌳 Choose a Root to Explore:")
     selected_root = st.sidebar.selectbox(
-        "Choose a root to explore:",
+        "Pick your adventure:",
         options=list(ROOTS_DATA.keys()),
-        format_func=lambda x: f"{x} ({ROOTS_DATA[x]['meaning']})"
+        format_func=lambda x: f"{ROOTS_DATA[x]['emoji']} {x} ({ROOTS_DATA[x]['meaning']})",
+        key="root_selector"
     )
     
-    # Progress tracking (simulated)
-    st.sidebar.progress(len([r for r in ROOTS_DATA.keys() if st.session_state.get(f"completed_{r}", False)]) / len(ROOTS_DATA))
+    # Fun progress with stars
+    progress = len([r for r in ROOTS_DATA.keys() if st.session_state.get(f"completed_{r}", False)]) / len(ROOTS_DATA)
+    st.sidebar.progress(progress)
+    stars = "⭐" * len([r for r in ROOTS_DATA.keys() if st.session_state.get(f"completed_{r}", False)])
+    st.sidebar.markdown(f"### 🏆 Your Stars: {stars}")
     st.sidebar.caption(f"Roots mastered: {len([r for r in ROOTS_DATA.keys() if st.session_state.get(f'completed_{r}', False)])}/{len(ROOTS_DATA)}")
     
     # Main content
@@ -199,329 +237,231 @@ def main():
     
     # Quiz section
     st.sidebar.markdown("---")
-    if st.sidebar.checkbox("🎯 Quick Quiz"):
-        display_quiz()
+    if st.sidebar.button("🎯 Take a Quiz!", key="quiz_button"):
+        st.session_state.show_quiz = True
+    
+    if st.session_state.get('show_quiz', False):
+        st.markdown("---")
+        display_simple_quiz()
 
 def display_root_lesson(root):
     data = ROOTS_DATA[root]
     
-    # Header
-    col1, col2 = st.columns([2, 1])
+    # Header with emoji and color
+    col1, col2 = st.columns([3, 1])
     with col1:
-        st.header(f"Root: {root}")
-        st.subheader(f"Meaning: {data['meaning']} ({data['pronunciation']})")
+        st.markdown(f"## {data['emoji']} Root: {root}")
+        st.markdown(f"### Meaning: {data['meaning']} ({data['pronunciation']})")
     
     with col2:
-        if st.button("Mark as Mastered ✅"):
+        if st.button("🌟 I Mastered This!", key=f"master_{root}"):
             st.session_state[f"completed_{root}"] = True
-            st.success(random.choice(ENCOURAGEMENT))
+            st.balloons()
+            st.success(random.choice(KID_ENCOURAGEMENT))
     
-    # Tutor introduction
-    st.info(f"🤓 **Your Tutor Says:** {data['tutor_intro']}")
+    # Tutor introduction with custom styling
+    st.markdown(f"""
+    <div class="tutor-quote">
+        🤓 <strong>Your Tutor Says:</strong> {data['tutor_intro']}
+    </div>
+    """, unsafe_allow_html=True)
     
     # Tabs for different content
-    tab1, tab2, tab3, tab4 = st.tabs(["📱 Word Family", "💬 Conversations", "📚 Context", "🎯 Practice"])
+    tab1, tab2, tab3, tab4 = st.tabs(["🌳 Word Family", "💬 Conversations", "📚 Fun Facts", "🎯 Practice"])
     
     with tab1:
-        st.markdown("Here's how this root creates different words:")
+        st.markdown("### See how this root creates different words! ✨")
         
-        # Display words in a nice table
-        word_data = []
         for word in data['words']:
-            word_data.append([
-                word['hebrew'],
-                word['pronunciation'],
-                word['meaning'],
-                word['type']
-            ])
+            col1, col2, col3, col4 = st.columns([1, 2, 2, 3])
+            with col1:
+                st.markdown(f"### {word['emoji']}")
+            with col2:
+                st.markdown(f"<div class='hebrew-text'>{word['hebrew']}</div>", unsafe_allow_html=True)
+            with col3:
+                st.markdown(f"**{word['pronunciation']}**")
+            with col4:
+                st.markdown(f"*{word['meaning']}* ({word['type']})")
         
-        import pandas as pd
-        df = pd.DataFrame(word_data, columns=['Hebrew', 'Pronunciation', 'English', 'Type'])
-        st.dataframe(df, use_container_width=True)
-    
     with tab2:
-        st.markdown("**Real-life conversations using this root:**")
+        st.markdown("### 🗣️ Real Hebrew Conversations!")
         
-        for i, conv in enumerate(data['conversations']):
-            with st.container():
-                st.markdown(f"**{conv['context']}**")
-                
-                # Hebrew text (larger)
-                st.markdown(f"<div style='font-size: 18px; text-align: right; background-color: #f0f0f0; padding: 10px; border-radius: 5px; margin: 5px 0;'>{conv['hebrew']}</div>", unsafe_allow_html=True)
-                
-                # Pronunciation
-                st.markdown(f"*{conv['pronunciation']}*")
-                
-                # English translation
-                st.markdown(f"**{conv['english']}**")
-                
-                st.markdown("---")
+        for conv in data['conversations']:
+            st.markdown(f"#### {conv['context']} {conv['emoji']}")
+            
+            # Hebrew in a special box
+            st.markdown(f"<div class='hebrew-text'>{conv['hebrew']}</div>", unsafe_allow_html=True)
+            
+            # Pronunciation and translation
+            st.markdown(f"**🔊 Sounds like:** *{conv['pronunciation']}*")
+            st.markdown(f"**🇺🇸 In English:** {conv['english']}")
+            st.markdown("---")
     
     with tab3:
-        # Etymology and Torah connection
         col1, col2 = st.columns(2)
         
         with col1:
-            st.subheader("📚 Etymology")
-            st.markdown(data['etymology'])
+            st.markdown("### 🎉 Fun Fact!")
+            st.info(data['kid_fact'])
         
         with col2:
-            st.subheader("📜 Torah Connection")
-            st.markdown(data['torah_connection'])
+            st.markdown("### 📜 Torah Connection")
+            st.info(data['torah_connection'])
     
     with tab4:
-        # Interactive practice with session state
-        st.markdown("**Match the Hebrew word with its meaning:**")
-        
-        # Initialize session state for this root's practice
-        practice_key = f"practice_{root}"
-        if practice_key not in st.session_state:
-            st.session_state[practice_key] = {
-                'word': random.choice(data['words']),
-                'answered': False,
-                'show_result': False
-            }
-        
-        practice_word = st.session_state[practice_key]['word']
-        
-        # Create multiple choice
-        correct_answer = practice_word['meaning']
-        wrong_answers = [w['meaning'] for w in random.choices([w for root_data in ROOTS_DATA.values() for w in root_data['words'] if w['meaning'] != correct_answer], k=2)]
-        all_answers = [correct_answer] + wrong_answers
-        random.shuffle(all_answers)
-        
-        st.markdown(f"**{practice_word['hebrew']}** ({practice_word['pronunciation']}) means:")
-        
-        # Radio button for answer selection
-        answer = st.radio("Choose the correct meaning:", all_answers, key=f"answer_{root}")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            if st.button("Check Answer", key=f"check_{root}"):
-                st.session_state[practice_key]['answered'] = True
-                st.session_state[practice_key]['show_result'] = True
-                if answer == correct_answer:
-                    st.session_state[practice_key]['result'] = 'correct'
-                else:
-                    st.session_state[practice_key]['result'] = 'incorrect'
-        
-        with col2:
-            if st.button("New Question", key=f"new_{root}"):
-                # Reset the practice state for new question
-                st.session_state[practice_key] = {
-                    'word': random.choice(data['words']),
-                    'answered': False,
-                    'show_result': False
-                }
-        
-        # Show result if answered
-        if st.session_state[practice_key].get('show_result', False):
-            if st.session_state[practice_key]['result'] == 'correct':
-                st.success(f"🎉 {random.choice(ENCOURAGEMENT)}")
-            else:
-                st.error(f"😅 {random.choice(GENTLE_CORRECTIONS)} The correct answer is '{correct_answer}'")
-        
-        # Conversation quiz
-        st.markdown("---")
-        st.markdown("**Conversation Challenge:**")
-        
-        conv_key = f"conv_{root}"
-        if conv_key not in st.session_state:
-            st.session_state[conv_key] = {
-                'conversation': random.choice(data['conversations']),
-                'answered': False,
-                'show_result': False
-            }
-        
-        current_conv = st.session_state[conv_key]['conversation']
-        
-        st.markdown(f"**Context:** {current_conv['context']}")
-        st.markdown(f"**Hebrew:** {current_conv['hebrew']}")
-        st.markdown(f"**Pronunciation:** *{current_conv['pronunciation']}*")
-        st.markdown("**What does this mean?**")
-        
-        # Multiple choice for conversation
-        correct_conv_answer = current_conv['english']
-        wrong_conv_answers = [conv['english'] for conv in random.choices([conv for root_data in ROOTS_DATA.values() for conv in root_data['conversations'] if conv['english'] != correct_conv_answer], k=2)]
-        all_conv_answers = [correct_conv_answer] + wrong_conv_answers
-        random.shuffle(all_conv_answers)
-        
-        conv_answer = st.radio("Choose the correct translation:", all_conv_answers, key=f"conv_answer_{root}")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            if st.button("Check Translation", key=f"check_conv_{root}"):
-                st.session_state[conv_key]['answered'] = True
-                st.session_state[conv_key]['show_result'] = True
-                if conv_answer == correct_conv_answer:
-                    st.session_state[conv_key]['result'] = 'correct'
-                else:
-                    st.session_state[conv_key]['result'] = 'incorrect'
-        
-        with col2:
-            if st.button("New Conversation", key=f"new_conv_{root}"):
-                st.session_state[conv_key] = {
-                    'conversation': random.choice(data['conversations']),
-                    'answered': False,
-                    'show_result': False
-                }
-        
-        # Show conversation result
-        if st.session_state[conv_key].get('show_result', False):
-            if st.session_state[conv_key]['result'] == 'correct':
-                st.success(f"🎉 Excellent! You're getting the hang of real Hebrew conversations!")
-            else:
-                st.error(f"😅 Not quite! The correct translation is: '{correct_conv_answer}'")
+        display_practice_section(root, data)
 
-def display_quiz():
-    st.subheader("🎯 Quick Root Quiz")
-    st.markdown("*Let's see how much you've absorbed while I wasn't looking...*")
+def display_practice_section(root, data):
+    st.markdown("### 🎯 Practice Time!")
     
-    # Initialize quiz state with stable questions
-    if 'quiz_state' not in st.session_state:
-        # Create stable quiz question
+    # Simple practice question
+    if f"practice_q_{root}" not in st.session_state:
+        # Create a simple question
+        word = random.choice(data['words'])
+        options = [word['meaning']] + [w['meaning'] for w in random.choices([w for r in ROOTS_DATA.values() for w in r['words'] if w['meaning'] != word['meaning']], k=2)]
+        random.shuffle(options)
+        
+        st.session_state[f"practice_q_{root}"] = {
+            'word': word,
+            'options': options,
+            'correct': word['meaning'],
+            'answered': False
+        }
+    
+    question = st.session_state[f"practice_q_{root}"]
+    
+    if not question['answered']:
+        st.markdown(f"#### What does {question['word']['emoji']} **{question['word']['hebrew']}** mean?")
+        st.markdown(f"*Pronunciation: {question['word']['pronunciation']}*")
+        
+        # Simple radio buttons
+        answer = st.radio("Pick your answer:", question['options'], key=f"answer_{root}")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("✅ Check My Answer!", key=f"check_{root}"):
+                st.session_state[f"practice_q_{root}"]['answered'] = True
+                st.session_state[f"practice_q_{root}"]['user_answer'] = answer
+        
+        with col2:
+            if st.button("🔄 New Question", key=f"new_q_{root}"):
+                # Reset with new question
+                word = random.choice(data['words'])
+                options = [word['meaning']] + [w['meaning'] for w in random.choices([w for r in ROOTS_DATA.values() for w in r['words'] if w['meaning'] != word['meaning']], k=2)]
+                random.shuffle(options)
+                
+                st.session_state[f"practice_q_{root}"] = {
+                    'word': word,
+                    'options': options,
+                    'correct': word['meaning'],
+                    'answered': False
+                }
+    else:
+        # Show result
+        if question['user_answer'] == question['correct']:
+            st.markdown(f"""
+            <div class="success-box">
+                🎉 {random.choice(KID_ENCOURAGEMENT)}
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.error(f"😊 {random.choice(GENTLE_CORRECTIONS)} The answer is: **{question['correct']}**")
+        
+        if st.button("🚀 Try Another Question!", key=f"reset_{root}"):
+            # Reset for new question
+            word = random.choice(data['words'])
+            options = [word['meaning']] + [w['meaning'] for w in random.choices([w for r in ROOTS_DATA.values() for w in r['words'] if w['meaning'] != word['meaning']], k=2)]
+            random.shuffle(options)
+            
+            st.session_state[f"practice_q_{root}"] = {
+                'word': word,
+                'options': options,
+                'correct': word['meaning'],
+                'answered': False
+            }
+
+def display_simple_quiz():
+    st.markdown("## 🎯 Quick Quiz Time!")
+    st.markdown("*Let's see what you remember!* 🧠✨")
+    
+    # Initialize quiz
+    if 'simple_quiz' not in st.session_state:
+        # Pick a random word from all roots
         all_words = []
         for root, data in ROOTS_DATA.items():
-            for word in data['words'][:2]:
-                all_words.append({**word, 'root': root})
+            for word in data['words']:
+                all_words.append({'word': word, 'root': root, 'root_meaning': data['meaning']})
         
-        selected_word = random.choice(all_words)
-        correct_root = selected_word['root']
-        wrong_roots = random.sample([r for r in ROOTS_DATA.keys() if r != correct_root], 2)
-        all_roots_options = [f"{correct_root} ({ROOTS_DATA[correct_root]['meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in wrong_roots]
-        random.shuffle(all_roots_options)
+        selected = random.choice(all_words)
+        root_options = [f"{selected['root']} ({selected['root_meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in random.sample([r for r in ROOTS_DATA.keys() if r != selected['root']], 2)]
+        random.shuffle(root_options)
         
-        st.session_state.quiz_state = {
-            'word': selected_word,
-            'correct_root': correct_root,
-            'all_options': all_roots_options,
-            'answered': False,
-            'show_result': False
+        st.session_state.simple_quiz = {
+            'selected': selected,
+            'options': root_options,
+            'answered': False
         }
     
-    # Get stable quiz data
-    quiz_data = st.session_state.quiz_state
-    quiz_word = quiz_data['word']
+    quiz = st.session_state.simple_quiz
     
-    st.markdown(f"**Which root does '{quiz_word['hebrew']}' ({quiz_word['meaning']}) come from?**")
-    
-    quiz_answer = st.radio("Choose the correct root:", quiz_data['all_options'], key="quiz_answer")
-    
-    # Extract just the root from the selection
-    selected_root = quiz_answer.split(' (')[0]
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("Check Quiz Answer"):
-            st.session_state.quiz_state['answered'] = True
-            st.session_state.quiz_state['show_result'] = True
-            st.session_state.quiz_state['user_answer'] = selected_root
-    
-    with col2:
-        if st.button("New Quiz Question"):
-            # Generate completely new quiz question
+    if not quiz['answered']:
+        st.markdown(f"### Which root does **{quiz['selected']['word']['hebrew']}** come from?")
+        st.markdown(f"*It means: {quiz['selected']['word']['meaning']} {quiz['selected']['word']['emoji']}*")
+        
+        answer = st.radio("Choose the root:", quiz['options'], key="quiz_answer")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("🎯 Check My Answer!"):
+                st.session_state.simple_quiz['answered'] = True
+                st.session_state.simple_quiz['user_answer'] = answer
+        
+        with col2:
+            if st.button("🔄 New Quiz Question"):
+                # Reset quiz
+                all_words = []
+                for root, data in ROOTS_DATA.items():
+                    for word in data['words']:
+                        all_words.append({'word': word, 'root': root, 'root_meaning': data['meaning']})
+                
+                selected = random.choice(all_words)
+                root_options = [f"{selected['root']} ({selected['root_meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in random.sample([r for r in ROOTS_DATA.keys() if r != selected['root']], 2)]
+                random.shuffle(root_options)
+                
+                st.session_state.simple_quiz = {
+                    'selected': selected,
+                    'options': root_options,
+                    'answered': False
+                }
+    else:
+        # Show result
+        correct_answer = f"{quiz['selected']['root']} ({quiz['selected']['root_meaning']})"
+        if quiz['user_answer'] == correct_answer:
+            st.balloons()
+            st.markdown(f"""
+            <div class="success-box">
+                🎉 {random.choice(KID_ENCOURAGEMENT)}
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.error(f"😊 {random.choice(GENTLE_CORRECTIONS)} **{quiz['selected']['word']['hebrew']}** comes from {correct_answer}")
+        
+        if st.button("🚀 Another Quiz!"):
+            # Reset quiz
             all_words = []
             for root, data in ROOTS_DATA.items():
-                for word in data['words'][:2]:
-                    all_words.append({**word, 'root': root})
+                for word in data['words']:
+                    all_words.append({'word': word, 'root': root, 'root_meaning': data['meaning']})
             
-            new_word = random.choice(all_words)
-            new_correct_root = new_word['root']
-            new_wrong_roots = random.sample([r for r in ROOTS_DATA.keys() if r != new_correct_root], 2)
-            new_all_options = [f"{new_correct_root} ({ROOTS_DATA[new_correct_root]['meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in new_wrong_roots]
-            random.shuffle(new_all_options)
+            selected = random.choice(all_words)
+            root_options = [f"{selected['root']} ({selected['root_meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in random.sample([r for r in ROOTS_DATA.keys() if r != selected['root']], 2)]
+            random.shuffle(root_options)
             
-            st.session_state.quiz_state = {
-                'word': new_word,
-                'correct_root': new_correct_root,
-                'all_options': new_all_options,
-                'answered': False,
-                'show_result': False
+            st.session_state.simple_quiz = {
+                'selected': selected,
+                'options': root_options,
+                'answered': False
             }
-    
-    # Show result if answered
-    if quiz_data.get('show_result', False):
-        if quiz_data.get('user_answer') == quiz_data['correct_root']:
-            st.success(f"🎉 Excellent! You're really getting the hang of this!")
-            st.balloons()
-        else:
-            st.error(f"😅 Not quite! '{quiz_word['hebrew']}' comes from the root {quiz_data['correct_root']} ({ROOTS_DATA[quiz_data['correct_root']]['meaning']})")
-    
-    # Add conversation quiz
-    st.markdown("---")
-    st.markdown("**🗣️ Conversation Quiz**")
-    
-    # Initialize conversation quiz state
-    if 'conv_quiz_state' not in st.session_state:
-        # Create stable conversation quiz
-        all_conversations = []
-        for root, data in ROOTS_DATA.items():
-            for conv in data['conversations']:
-                all_conversations.append({**conv, 'root': root})
-        
-        selected_conv = random.choice(all_conversations)
-        correct_translation = selected_conv['english']
-        wrong_translations = [conv['english'] for conv in random.choices([conv for root_data in ROOTS_DATA.values() for conv in root_data['conversations'] if conv['english'] != correct_translation], k=2)]
-        all_translations = [correct_translation] + wrong_translations
-        random.shuffle(all_translations)
-        
-        st.session_state.conv_quiz_state = {
-            'conversation': selected_conv,
-            'correct_answer': correct_translation,
-            'all_options': all_translations,
-            'answered': False,
-            'show_result': False
-        }
-    
-    # Get stable conversation data
-    conv_quiz_data = st.session_state.conv_quiz_state
-    quiz_conv = conv_quiz_data['conversation']
-    
-    st.markdown(f"**Context:** {quiz_conv['context']}")
-    st.markdown(f"**Hebrew:** {quiz_conv['hebrew']}")
-    st.markdown("**What does this mean?**")
-    
-    conv_quiz_answer = st.radio("Choose the correct translation:", conv_quiz_data['all_options'], key="conv_quiz_answer")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("Check Translation"):
-            st.session_state.conv_quiz_state['answered'] = True
-            st.session_state.conv_quiz_state['show_result'] = True
-            st.session_state.conv_quiz_state['user_answer'] = conv_quiz_answer
-    
-    with col2:
-        if st.button("New Conversation"):
-            # Generate new conversation quiz
-            all_conversations = []
-            for root, data in ROOTS_DATA.items():
-                for conv in data['conversations']:
-                    all_conversations.append({**conv, 'root': root})
-            
-            new_conv = random.choice(all_conversations)
-            new_correct_translation = new_conv['english']
-            new_wrong_translations = [conv['english'] for conv in random.choices([conv for root_data in ROOTS_DATA.values() for conv in root_data['conversations'] if conv['english'] != new_correct_translation], k=2)]
-            new_all_translations = [new_correct_translation] + new_wrong_translations
-            random.shuffle(new_all_translations)
-            
-            st.session_state.conv_quiz_state = {
-                'conversation': new_conv,
-                'correct_answer': new_correct_translation,
-                'all_options': new_all_translations,
-                'answered': False,
-                'show_result': False
-            }
-    
-    # Show conversation result
-    if conv_quiz_data.get('show_result', False):
-        if conv_quiz_data.get('user_answer') == conv_quiz_data['correct_answer']:
-            st.success(f"🎉 Perfect! You're understanding Hebrew in context!")
-        else:
-            st.error(f"😅 Close, but the correct translation is: '{conv_quiz_data['correct_answer']}'")
 
 if __name__ == "__main__":
     main()
