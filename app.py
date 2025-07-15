@@ -379,35 +379,37 @@ def display_quiz():
     st.subheader("🎯 Quick Root Quiz")
     st.markdown("*Let's see how much you've absorbed while I wasn't looking...*")
     
-    # Initialize quiz state
+    # Initialize quiz state with stable questions
     if 'quiz_state' not in st.session_state:
-        # Select random words from all roots
+        # Create stable quiz question
         all_words = []
         for root, data in ROOTS_DATA.items():
-            for word in data['words'][:2]:  # Take first 2 words from each root
+            for word in data['words'][:2]:
                 all_words.append({**word, 'root': root})
         
+        selected_word = random.choice(all_words)
+        correct_root = selected_word['root']
+        wrong_roots = random.sample([r for r in ROOTS_DATA.keys() if r != correct_root], 2)
+        all_roots_options = [f"{correct_root} ({ROOTS_DATA[correct_root]['meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in wrong_roots]
+        random.shuffle(all_roots_options)
+        
         st.session_state.quiz_state = {
-            'word': random.choice(all_words),
+            'word': selected_word,
+            'correct_root': correct_root,
+            'all_options': all_roots_options,
             'answered': False,
             'show_result': False
         }
     
-    quiz_word = st.session_state.quiz_state['word']
+    # Get stable quiz data
+    quiz_data = st.session_state.quiz_state
+    quiz_word = quiz_data['word']
     
     st.markdown(f"**Which root does '{quiz_word['hebrew']}' ({quiz_word['meaning']}) come from?**")
     
-    # Create multiple choice with roots
-    correct_root = quiz_word['root']
-    wrong_roots = random.sample([r for r in ROOTS_DATA.keys() if r != correct_root], 2)
-    all_roots = [correct_root] + wrong_roots
-    random.shuffle(all_roots)
+    quiz_answer = st.radio("Choose the correct root:", quiz_data['all_options'], key="quiz_answer")
     
-    quiz_answer = st.radio("Choose the correct root:", 
-                          [f"{root} ({ROOTS_DATA[root]['meaning']})" for root in all_roots], 
-                          key="quiz_answer")
-    
-    # Extract just the root from the selection (remove the meaning part)
+    # Extract just the root from the selection
     selected_root = quiz_answer.split(' (')[0]
     
     col1, col2 = st.columns(2)
@@ -416,32 +418,37 @@ def display_quiz():
         if st.button("Check Quiz Answer"):
             st.session_state.quiz_state['answered'] = True
             st.session_state.quiz_state['show_result'] = True
-            if selected_root == correct_root:
-                st.session_state.quiz_state['result'] = 'correct'
-            else:
-                st.session_state.quiz_state['result'] = 'incorrect'
+            st.session_state.quiz_state['user_answer'] = selected_root
     
     with col2:
         if st.button("New Quiz Question"):
-            # Reset quiz with new question
+            # Generate completely new quiz question
             all_words = []
             for root, data in ROOTS_DATA.items():
                 for word in data['words'][:2]:
                     all_words.append({**word, 'root': root})
             
+            new_word = random.choice(all_words)
+            new_correct_root = new_word['root']
+            new_wrong_roots = random.sample([r for r in ROOTS_DATA.keys() if r != new_correct_root], 2)
+            new_all_options = [f"{new_correct_root} ({ROOTS_DATA[new_correct_root]['meaning']})"] + [f"{r} ({ROOTS_DATA[r]['meaning']})" for r in new_wrong_roots]
+            random.shuffle(new_all_options)
+            
             st.session_state.quiz_state = {
-                'word': random.choice(all_words),
+                'word': new_word,
+                'correct_root': new_correct_root,
+                'all_options': new_all_options,
                 'answered': False,
                 'show_result': False
             }
     
     # Show result if answered
-    if st.session_state.quiz_state.get('show_result', False):
-        if st.session_state.quiz_state['result'] == 'correct':
+    if quiz_data.get('show_result', False):
+        if quiz_data.get('user_answer') == quiz_data['correct_root']:
             st.success(f"🎉 Excellent! You're really getting the hang of this!")
             st.balloons()
         else:
-            st.error(f"😅 Not quite! '{quiz_word['hebrew']}' comes from the root {correct_root} ({ROOTS_DATA[correct_root]['meaning']})")
+            st.error(f"😅 Not quite! '{quiz_word['hebrew']}' comes from the root {quiz_data['correct_root']} ({ROOTS_DATA[quiz_data['correct_root']]['meaning']})")
     
     # Add conversation quiz
     st.markdown("---")
@@ -449,30 +456,35 @@ def display_quiz():
     
     # Initialize conversation quiz state
     if 'conv_quiz_state' not in st.session_state:
+        # Create stable conversation quiz
         all_conversations = []
         for root, data in ROOTS_DATA.items():
             for conv in data['conversations']:
                 all_conversations.append({**conv, 'root': root})
         
+        selected_conv = random.choice(all_conversations)
+        correct_translation = selected_conv['english']
+        wrong_translations = [conv['english'] for conv in random.choices([conv for root_data in ROOTS_DATA.values() for conv in root_data['conversations'] if conv['english'] != correct_translation], k=2)]
+        all_translations = [correct_translation] + wrong_translations
+        random.shuffle(all_translations)
+        
         st.session_state.conv_quiz_state = {
-            'conversation': random.choice(all_conversations),
+            'conversation': selected_conv,
+            'correct_answer': correct_translation,
+            'all_options': all_translations,
             'answered': False,
             'show_result': False
         }
     
-    quiz_conv = st.session_state.conv_quiz_state['conversation']
+    # Get stable conversation data
+    conv_quiz_data = st.session_state.conv_quiz_state
+    quiz_conv = conv_quiz_data['conversation']
     
     st.markdown(f"**Context:** {quiz_conv['context']}")
     st.markdown(f"**Hebrew:** {quiz_conv['hebrew']}")
     st.markdown("**What does this mean?**")
     
-    # Create multiple choice for conversation translation
-    correct_translation = quiz_conv['english']
-    wrong_translations = [conv['english'] for conv in random.choices([conv for root_data in ROOTS_DATA.values() for conv in root_data['conversations'] if conv['english'] != correct_translation], k=2)]
-    all_translations = [correct_translation] + wrong_translations
-    random.shuffle(all_translations)
-    
-    conv_quiz_answer = st.radio("Choose the correct translation:", all_translations, key="conv_quiz_answer")
+    conv_quiz_answer = st.radio("Choose the correct translation:", conv_quiz_data['all_options'], key="conv_quiz_answer")
     
     col1, col2 = st.columns(2)
     
@@ -480,30 +492,36 @@ def display_quiz():
         if st.button("Check Translation"):
             st.session_state.conv_quiz_state['answered'] = True
             st.session_state.conv_quiz_state['show_result'] = True
-            if conv_quiz_answer == correct_translation:
-                st.session_state.conv_quiz_state['result'] = 'correct'
-            else:
-                st.session_state.conv_quiz_state['result'] = 'incorrect'
+            st.session_state.conv_quiz_state['user_answer'] = conv_quiz_answer
     
     with col2:
         if st.button("New Conversation"):
+            # Generate new conversation quiz
             all_conversations = []
             for root, data in ROOTS_DATA.items():
                 for conv in data['conversations']:
                     all_conversations.append({**conv, 'root': root})
             
+            new_conv = random.choice(all_conversations)
+            new_correct_translation = new_conv['english']
+            new_wrong_translations = [conv['english'] for conv in random.choices([conv for root_data in ROOTS_DATA.values() for conv in root_data['conversations'] if conv['english'] != new_correct_translation], k=2)]
+            new_all_translations = [new_correct_translation] + new_wrong_translations
+            random.shuffle(new_all_translations)
+            
             st.session_state.conv_quiz_state = {
-                'conversation': random.choice(all_conversations),
+                'conversation': new_conv,
+                'correct_answer': new_correct_translation,
+                'all_options': new_all_translations,
                 'answered': False,
                 'show_result': False
             }
     
     # Show conversation result
-    if st.session_state.conv_quiz_state.get('show_result', False):
-        if st.session_state.conv_quiz_state['result'] == 'correct':
+    if conv_quiz_data.get('show_result', False):
+        if conv_quiz_data.get('user_answer') == conv_quiz_data['correct_answer']:
             st.success(f"🎉 Perfect! You're understanding Hebrew in context!")
         else:
-            st.error(f"😅 Close, but the correct translation is: '{correct_translation}'")
+            st.error(f"😅 Close, but the correct translation is: '{conv_quiz_data['correct_answer']}'")
 
 if __name__ == "__main__":
     main()
