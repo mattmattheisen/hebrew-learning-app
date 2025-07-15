@@ -313,7 +313,7 @@ def display_root_lesson(root):
                     'answered': False,
                     'show_result': False
                 }
-                st.experimental_rerun()
+                st.rerun()
         
         # Show result if answered
         if st.session_state[practice_key].get('show_result', False):
@@ -367,7 +367,7 @@ def display_root_lesson(root):
                     'answered': False,
                     'show_result': False
                 }
-                st.experimental_rerun()
+                st.rerun()
         
         # Show conversation result
         if st.session_state[conv_key].get('show_result', False):
@@ -435,7 +435,7 @@ def display_quiz():
                 'answered': False,
                 'show_result': False
             }
-            st.experimental_rerun()
+            st.rerun()
     
     # Show result if answered
     if st.session_state.quiz_state.get('show_result', False):
@@ -499,7 +499,7 @@ def display_quiz():
                 'answered': False,
                 'show_result': False
             }
-            st.experimental_rerun()
+            st.rerun()
     
     # Show conversation result
     if st.session_state.conv_quiz_state.get('show_result', False):
