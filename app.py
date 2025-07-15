@@ -308,12 +308,12 @@ def display_root_lesson(root):
         
         with col2:
             if st.button("New Question", key=f"new_{root}"):
+                # Reset the practice state for new question
                 st.session_state[practice_key] = {
                     'word': random.choice(data['words']),
                     'answered': False,
                     'show_result': False
                 }
-                st.rerun()
         
         # Show result if answered
         if st.session_state[practice_key].get('show_result', False):
@@ -367,7 +367,6 @@ def display_root_lesson(root):
                     'answered': False,
                     'show_result': False
                 }
-                st.rerun()
         
         # Show conversation result
         if st.session_state[conv_key].get('show_result', False):
@@ -435,7 +434,6 @@ def display_quiz():
                 'answered': False,
                 'show_result': False
             }
-            st.rerun()
     
     # Show result if answered
     if st.session_state.quiz_state.get('show_result', False):
@@ -499,7 +497,6 @@ def display_quiz():
                 'answered': False,
                 'show_result': False
             }
-            st.rerun()
     
     # Show conversation result
     if st.session_state.conv_quiz_state.get('show_result', False):
